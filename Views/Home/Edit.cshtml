@@ -1,0 +1,19 @@
+﻿@model Post
+
+@{ 
+
+}
+
+<div>
+    <form method="Post" asp-action="Edit" asp-controller="Home">
+        <div>
+            <label>Title</label>
+            <input asp-for="Title" />
+        </div>
+        <div>
+            <label>Body</label>
+            <input asp-for="Body" />
+        </div>
+        <input type="submit" value="Submit"/>
+    </form>
+</div>
