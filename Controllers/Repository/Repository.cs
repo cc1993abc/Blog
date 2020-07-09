@@ -20,7 +20,7 @@ namespace Blog.Controllers.Repository
            _ctx.posts.Add(post);
         }
 
-        public List<Post> GetAllPosts(int id)
+        public List<Post> GetAllPosts()
         {
             return _ctx.posts.ToList();
         }
