@@ -1,3 +1,25 @@
-﻿<h2>
-    this is admin Panel
-</h2>
+﻿@model IEnumerable<Post>
+
+@{ 
+
+}
+
+<h2>Home page!</h2>
+<img src="~/Content/static/5fccd5ff3be7b08d9f492062c1ad3ca4.jpg" />
+<div>
+    <ul>
+        @foreach (var post in Model)
+        {
+        <li>
+                @post.Title
+            -
+            <a asp-controller="Panel" asp-action="Edit" asp-route-id="@post.Id">
+                Edit
+            </a>
+            <a asp-controller="Panel" asp-action="Remove" asp-route-id="@post.Id">
+                Remove
+            </a>
+        </li>
+        }
+    </ul>
+</div>

@@ -37,7 +37,7 @@ namespace Blog
                 //.AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>(); ;
 
-
+            //ÅäÖÃÖØ¶¨Ïò
             services.ConfigureApplicationCookie(options => {
                 options.LoginPath = "/Auth/Login";
             });
@@ -55,7 +55,10 @@ namespace Blog
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
+
             app.UseAuthorization();
+
+            app.UseStaticFiles();
 
             app.UseMvcWithDefaultRoute();
         }

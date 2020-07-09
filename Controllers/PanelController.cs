@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Blog.Controllers.Repository;
+using Blog.Models;
+using Blog.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,9 +14,66 @@ namespace Blog.Controllers
     [Authorize(Roles ="admin")]
     public class PanelController : Controller
     {
+        public IRepository _repo { get; set; }
+        public PanelController(IRepository repo)
+        {
+            _repo = repo;
+        }
         public IActionResult Index()
         {
-            return View();
+            var posts = _repo.GetAllPosts();
+            return View(posts);
+        }
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return View(new PostViewModel());
+            }
+            var post = _repo.GetPost(id.Value);
+            return View(new PostViewModel()
+            {
+                Title = post.Title,
+                Body = post.Body,
+                Id = post.Id
+            }) ;
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(PostViewModel vm)
+        {
+            var post = new Post()
+            {
+                Title = vm.Title,
+                Body = vm.Body,
+                Id = vm.Id,
+                Image = ""
+            };
+
+            if (post.Id > 0)
+            {
+                _repo.UpdatePost(post);
+            }
+            else
+            {
+                _repo.AddPost(post);
+
+            }
+
+            if (await _repo.SaveChangesAsync())
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View("Post");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Remove(int id)
+        {
+            _repo.RemovePost(id);
+            await _repo.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

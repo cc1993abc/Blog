@@ -28,43 +28,6 @@ namespace Blog.Controllers
             var post = _repo.GetPost(id);
             return View(post);
         }
-        [HttpGet]
-        public IActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return View(new Post());
-            }
-            var post = _repo.GetPost(id.Value);
-            return View(post);
-        }
-        [HttpPost]
-        public async Task<IActionResult> Edit(Post post)
-        {
-            if (post.Id > 0)
-            {
-                _repo.UpdatePost(post);
-            }
-            else
-            {
-                _repo.AddPost(post);
-
-            }
-
-            if (await _repo.SaveChangesAsync())
-            {
-                return RedirectToAction("Index");
-            }
-
-            return View("Post");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Remove(int id)
-        {
-            _repo.RemovePost(id);
-            await _repo.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
     }
+
 }
