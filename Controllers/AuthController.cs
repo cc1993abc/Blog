@@ -1,4 +1,5 @@
 ﻿using Blog.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,8 +28,12 @@ namespace Blog.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel vm)
         {
-            await _signInManager.PasswordSignInAsync(vm.UserName, vm.PassWord, false, false);
-            return RedirectToAction("Index","Home");
+            var result = await _signInManager.PasswordSignInAsync(vm.UserName, vm.PassWord, false, false);
+            if (result.Succeeded)
+            {
+                Console.WriteLine(User.Identity.IsAuthenticated);
+            }
+            return RedirectToAction("Index","Panel");
         }
         [HttpGet]
         public async Task<IActionResult> LogOut(LoginViewModel vm)
