@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Blog.Controllers.Repository;
 using Microsoft.AspNetCore.Identity;
-
+using Blog.Data.FileManager;
 
 namespace Blog
 {
@@ -43,6 +43,8 @@ namespace Blog
             });
 
             services.AddTransient<IRepository, Repository>();
+            services.AddTransient<IFileManager, FileManager>();
+
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
         }

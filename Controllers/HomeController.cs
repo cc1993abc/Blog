@@ -1,5 +1,6 @@
 ﻿using Blog.Controllers.Repository;
 using Blog.Data;
+using Blog.Data.FileManager;
 using Blog.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,13 @@ namespace Blog.Controllers
     public class HomeController : Controller
     {
         public IRepository _repo { get; set; }
-        public HomeController(IRepository repo)
+
+        private IFileManager _fileManager;
+
+        public HomeController(IRepository repo,IFileManager fileManager)
         {
             _repo = repo;
+            _fileManager = fileManager;
         }
         public IActionResult Index()
         {
@@ -27,6 +32,13 @@ namespace Blog.Controllers
         {
             var post = _repo.GetPost(id);
             return View(post);
+        }
+
+        [HttpGet("/Image/{image}")]
+        public IActionResult Image(string image)
+        {
+            var mime = image.Substring(image.LastIndexOf('.'));
+            return new FileStreamResult(_fileManager.ImageStream(image),$"image/{mime}");
         }
     }
 

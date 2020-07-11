@@ -1,4 +1,5 @@
 ﻿using Blog.Controllers.Repository;
+using Blog.Data.FileManager;
 using Blog.Models;
 using Blog.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -15,9 +16,13 @@ namespace Blog.Controllers
     public class PanelController : Controller
     {
         public IRepository _repo { get; set; }
-        public PanelController(IRepository repo)
+
+        private IFileManager _fileManager;
+
+        public PanelController(IRepository repo,IFileManager fileManager)
         {
             _repo = repo;
+            _fileManager = fileManager;
         }
         public IActionResult Index()
         {
@@ -42,12 +47,15 @@ namespace Blog.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(PostViewModel vm)
         {
+
+
+
             var post = new Post()
             {
                 Title = vm.Title,
                 Body = vm.Body,
                 Id = vm.Id,
-                Image = ""
+                Image = await _fileManager.SaveImage(vm.Image)
             };
 
             if (post.Id > 0)
@@ -66,6 +74,8 @@ namespace Blog.Controllers
             }
 
             return View("Post");
+            
+
         }
 
         [HttpGet]
