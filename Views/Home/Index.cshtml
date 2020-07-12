@@ -4,17 +4,18 @@
 
 }
 
-<h2>Home page!</h2>
-<img src="~/Content/static/5fccd5ff3be7b08d9f492062c1ad3ca4.jpg" />
-<div>
-    <ul>
+<div class="main-img">
+    <span class="title">
+        CC' Blog
+    </span>
+</div>
+<div class="container">
         @foreach (var post in Model)
         {
-        <li>
-            <a asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
-                @post.Title
+            var image_path = $"/Image/{post.Image}";
+            <a class="post" asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
+            <img src="@image_path"/>
+                <span class="title">@post.Title</span>
             </a>
-        </li>
         }
-    </ul>
 </div>

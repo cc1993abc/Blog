@@ -5,9 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
     <div>
+        <nav>
         <a asp-controller="Home" asp-action="Index">Home</a>
 
         <a asp-controller="Panel" asp-action="Edit">Create Post</a>
@@ -26,10 +28,13 @@
 
         }
 
+        </nav>
+
 
     </div>
     <div>
         @RenderBody()
     </div>
+    @RenderSection("scripts", false);
 </body>
 </html>

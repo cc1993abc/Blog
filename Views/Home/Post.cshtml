@@ -4,7 +4,7 @@
 
 }
 
-<h2>@Model.Title</h2>
+@*<h2>@Model.Title</h2>
 
 @if (!string.IsNullOrEmpty(Model.Image))
 {
@@ -12,4 +12,19 @@
     <img src="@image_path"/>
 }
 
-<p>@Model.Body</p>
+<p>@Model.Body</p>*@
+
+<div class="container">
+    <div class="post">
+        @if (!string.IsNullOrEmpty(Model.Image))
+        {
+            var image_path = $"/Image/{Model.Image}";
+            <img src="@image_path"/>
+            <span class="title">@Model.Title</span>
+        }
+    </div>
+    <div class="post-body">
+        @Html.Raw(Model.Body)
+    </div>
+</div>
+

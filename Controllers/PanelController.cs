@@ -41,7 +41,8 @@ namespace Blog.Controllers
             {
                 Title = post.Title,
                 Body = post.Body,
-                Id = post.Id
+                Id = post.Id,
+                CurrentImage = post.Image
             }) ;
         }
         [HttpPost]
@@ -55,8 +56,11 @@ namespace Blog.Controllers
                 Title = vm.Title,
                 Body = vm.Body,
                 Id = vm.Id,
-                Image = await _fileManager.SaveImage(vm.Image)
             };
+            if (vm.Image == null)
+                post.Image = vm.CurrentImage;
+            else
+                post.Image = await _fileManager.SaveImage(vm.Image);
 
             if (post.Id > 0)
             {

@@ -1,9 +1,9 @@
 ﻿@model PostViewModel
 
-@{ 
+@{
 
 }
-
+    <link href="~/lib/Trumbowyg-master/dist/ui/trumbowyg.min.css" rel="stylesheet" />
 <div>
     <form method="Post" asp-action="Edit" asp-controller="Panel" enctype="multipart/form-data">
         <input asp-for="Id" type="hidden" />
@@ -13,12 +13,22 @@
         </div>
         <div>
             <label>Body</label>
-            <input asp-for="Body" />
+            <textarea id="editor" asp-for="Body" ></textarea>
         </div>
         <div>
             <label>Image</label>
+            <input asp-for="CurrentImage" type="hidden"/>
             <input asp-for="Image" />
         </div>
         <input type="submit" value="Submit" />
     </form>
 </div>
+
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="~/lib/Trumbowyg-master/dist/trumbowyg.min.js"></script>
+
+    <script>
+        $('#editor').trumbowyg();
+    </script>
+}
