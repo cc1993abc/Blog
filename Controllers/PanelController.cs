@@ -42,7 +42,10 @@ namespace Blog.Controllers
                 Title = post.Title,
                 Body = post.Body,
                 Id = post.Id,
-                CurrentImage = post.Image
+                CurrentImage = post.Image,
+                Description = post.Description,
+                Tags = post.Tags,
+                Category = post.Category
             }) ;
         }
         [HttpPost]
@@ -56,6 +59,9 @@ namespace Blog.Controllers
                 Title = vm.Title,
                 Body = vm.Body,
                 Id = vm.Id,
+                Description = vm.Description,
+                Tags = vm.Tags,
+                Category = vm.Category
             };
             if (vm.Image == null)
                 post.Image = vm.CurrentImage;

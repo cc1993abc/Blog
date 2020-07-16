@@ -39,7 +39,7 @@ namespace Blog
 
             //ÅäÖÃÖØ¶¨Ïò
             services.ConfigureApplicationCookie(options => {
-                options.LoginPath = "/Auth/Login";
+                options.LoginPath = "/Home/Index";
             });
 
             services.AddTransient<IRepository, Repository>();
