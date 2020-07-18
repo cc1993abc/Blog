@@ -38,7 +38,8 @@ namespace Blog
                 .AddEntityFrameworkStores<AppDbContext>(); ;
 
             //ÅäÖÃÖØ¶¨Ïò
-            services.ConfigureApplicationCookie(options => {
+            services.ConfigureApplicationCookie(options =>
+            {
                 options.LoginPath = "/Home/Index";
             });
 
@@ -54,7 +55,7 @@ namespace Blog
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+            app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
 

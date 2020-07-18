@@ -24,6 +24,10 @@ namespace Blog.Controllers.Repository
         {
             return _ctx.posts.ToList();
         }
+        public List<Post> GetAllPosts(string category)
+        {
+            return _ctx.posts.Where(item => item.Category.ToLower().Equals(category.ToLower())).ToList();
+        }
 
         public Post GetPost(int id)
         {
@@ -49,5 +53,9 @@ namespace Blog.Controllers.Repository
             }
             return false;
         }
+
+
+
+
     }
 }
