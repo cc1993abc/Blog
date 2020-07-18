@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>a17e9611-3701-4e65-a25e-27aa30fdd8ed</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="PhotoSauce.MagicScaler" Version="0.11.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,4 +26,13 @@
     <None Include="wwwroot\lib\Trumbowyg-master\.github\ISSUE_TEMPLATE.md" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Content Update="wwwroot/content/blog/*.*" CopyToPublishDirectory="Never"></Content>
+    <Content Update="wwwroot/lib/**/*.*" CopyToPublishDirectory="Never"></Content>
+    <Content Update="wwwroot/lib/**/dist/**/*.*" CopyToPublishDirectory="Never"></Content>
+  </ItemGroup>
+
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/bundleconfig" /></VisualStudio></ProjectExtensions>
 </Project>

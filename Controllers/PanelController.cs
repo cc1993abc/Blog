@@ -9,17 +9,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PhotoSauce.MagicScaler;
 
 namespace Blog.Controllers
 {
-    [Authorize(Roles ="admin")]
+    [Authorize(Roles = "admin")]
     public class PanelController : Controller
     {
         public IRepository _repo { get; set; }
 
         private IFileManager _fileManager;
 
-        public PanelController(IRepository repo,IFileManager fileManager)
+        public PanelController(IRepository repo, IFileManager fileManager)
         {
             _repo = repo;
             _fileManager = fileManager;
@@ -46,7 +47,7 @@ namespace Blog.Controllers
                 Description = post.Description,
                 Tags = post.Tags,
                 Category = post.Category
-            }) ;
+            });
         }
         [HttpPost]
         public async Task<IActionResult> Edit(PostViewModel vm)
@@ -66,7 +67,13 @@ namespace Blog.Controllers
             if (vm.Image == null)
                 post.Image = vm.CurrentImage;
             else
+            {
+                if (!string.IsNullOrEmpty(vm.CurrentImage))
+                {
+                    _fileManager.RemoveImage(vm.CurrentImage);
+                }
                 post.Image = await _fileManager.SaveImage(vm.Image);
+            }
 
             if (post.Id > 0)
             {
@@ -84,7 +91,7 @@ namespace Blog.Controllers
             }
 
             return View("Post");
-            
+
 
         }
 
@@ -95,5 +102,7 @@ namespace Blog.Controllers
             await _repo.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
+
     }
 }
