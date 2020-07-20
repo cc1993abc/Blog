@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blog.Models.Comment;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,6 @@ namespace Blog.Models
         public string Image { get; set; } = "";
         public DateTime Created { get; set; } = DateTime.Now;
 
-
+        public List<MainComment> MainComments { get; set; }
     }
 }

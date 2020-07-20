@@ -8,6 +8,6 @@ namespace Blog.Models.Comment
 {
     public class SubComment : Comment
     {
-        
+        public int MainCommentId { get; set; }
     }
 }
