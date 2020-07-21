@@ -2,6 +2,8 @@
 using Blog.Data;
 using Blog.Data.FileManager;
 using Blog.Models;
+using Blog.Models.Comment;
+using Blog.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,7 +16,7 @@ namespace Blog.Controllers
 {
     public class HomeController : Controller
     {
-        public IRepository _repo { get; set; }
+        public  IRepository _repo { get; set; }
 
         private IFileManager _fileManager;
 
@@ -38,7 +40,7 @@ namespace Blog.Controllers
         [HttpGet("/Image/{image}")]
         [ResponseCache(CacheProfileName ="monthly")]
         public IActionResult Image(string image) => new FileStreamResult(_fileManager.ImageStream(image), $"image/{image.Substring(image.LastIndexOf('.'))}");
-        
+
 
         //[HttpGet("/Image/{image}")]
         //public IActionResult Image(string image)
@@ -46,6 +48,41 @@ namespace Blog.Controllers
         //    var mime = image.Substring(image.LastIndexOf('.'));
         //    return new FileStreamResult(_fileManager.ImageStream(image),$"image/{mime}");
         //}
+
+        public async Task<IActionResult> Comment(CommentViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Post(vm.PostId);
+            }
+            var post = _repo.GetPost(vm.PostId);
+            if (vm.MainCommentId >0)
+            {
+                // equal      post.MainComments =  post.MainComments  ?? new List<MainComment>();
+
+                post.MainComments ??= new List<MainComment>();
+
+                post.MainComments.Add(new MainComment
+                {
+                    Message = vm.Message,
+                    Created = DateTime.Now
+                });
+                _repo.UpdatePost(post);
+            }
+            else
+            {
+                var comment = new SubComment
+                {
+                    MainCommentId = vm.MainCommentId,
+                    Message = vm.Message,
+                    Created = DateTime.Now
+                };
+            }
+
+            await _repo.SaveChangesAsync();
+
+            return View();
+        }
     }
 
 }

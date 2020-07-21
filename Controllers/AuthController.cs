@@ -12,7 +12,7 @@ namespace Blog.Controllers
 {
     public class AuthController : Controller
     {
-        private SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
         public AuthController(SignInManager<IdentityUser> signInManager)
         {
@@ -36,7 +36,7 @@ namespace Blog.Controllers
             return RedirectToAction("Index","Panel");
         }
         [HttpGet]
-        public async Task<IActionResult> LogOut(LoginViewModel vm)
+        public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
 
