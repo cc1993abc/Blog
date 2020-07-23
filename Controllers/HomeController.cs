@@ -53,7 +53,7 @@ namespace Blog.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Post(vm.PostId);
+                return RedirectToAction("Post",new {id = vm.PostId });
             }
             var post = _repo.GetPost(vm.PostId);
             if (vm.MainCommentId >0)
@@ -77,11 +77,13 @@ namespace Blog.Controllers
                     Message = vm.Message,
                     Created = DateTime.Now
                 };
+                _repo.AddSubComment(comment);
             }
 
             await _repo.SaveChangesAsync();
 
-            return View();
+            return RedirectToAction("Post", new { id = vm.PostId });
+
         }
     }
 
