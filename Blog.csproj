@@ -38,5 +38,10 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <Folder Include="Data\Repository\新文件夹\" />
+  </ItemGroup>
+
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 </Project>
